@@ -39,7 +39,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        User::create($request->all());
+        $users = User::all();
+        return Inertia::render('User/Index', compact('users'));
     }
 
     /**
