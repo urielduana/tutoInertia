@@ -1,6 +1,9 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import InputError from "@/Components/InputError.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+
+
 import { router } from '@inertiajs/vue3'
 import { reactive } from 'vue'
 
@@ -31,18 +34,18 @@ function submit() {
                     <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
                         <form @submit.prevent="submit">
                             <label>Name: </label>
-                            <input type="text" v-model="form.name"  id="name"/>
+                            <input class="my-1 block w-full" type="text" v-model="form.name"/>
                             <input-error :message="errors.name" />
 
                             <label>Email: </label>
-                            <input type="text" v-model="form.email" id="email"/>
+                            <input class="my-1 block w-full" type="text" v-model="form.email"/>
                             <input-error :message="errors.email" />
 
                             <label>Password: </label>
-                            <input type="password" v-model="form.password" id="password"/>
+                            <input class="my-1 block w-full" type="password" v-model="form.password"/>
                             <input-error :message="errors.password" />
 
-                            <button type="submit">Submit</button>
+                            <primary-button type="submit">Submit</primary-button>
                         </form>
                         
                     </div>
