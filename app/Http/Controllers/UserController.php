@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Http\Requests\StoreUserPost;
+
 
 
 class UserController extends Controller
@@ -37,9 +39,12 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserPost $request)
     {
-        User::create($request->all());
+        User::create($request->validated());
+
+
+
         $users = User::all();
         return Inertia::render('User/Index', compact('users'));
     }

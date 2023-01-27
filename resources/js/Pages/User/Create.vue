@@ -3,6 +3,9 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import { router } from '@inertiajs/vue3'
 import { reactive } from 'vue'
 
+defineProps({ errors: Object },{ user: Object })
+
+
 const form = reactive({
     name: "",
     email: "",
@@ -29,12 +32,15 @@ function submit() {
                         <form @submit.prevent="submit">
                             <label>Name: </label>
                             <input type="text" v-model="form.name"  id="name"/>
+                            <div v-if="errors.name">{{ errors.name }}</div>
 
                             <label>Email: </label>
                             <input type="text" v-model="form.email" id="email"/>
+                            <div v-if="errors.email">{{ errors.email }}</div>
 
                             <label>Password: </label>
                             <input type="password" v-model="form.password" id="password"/>
+                            <div v-if="errors.password">{{ errors.password }}</div>
 
                             <button type="submit">Submit</button>
                         </form>
@@ -45,9 +51,3 @@ function submit() {
         </div>
     </AppLayout>
 </template>
-
-<script>
-export default {
-    props: ["users"],
-};
-</script>
