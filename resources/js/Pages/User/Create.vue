@@ -10,6 +10,7 @@ import { reactive } from 'vue'
 defineProps({ errors: Object },{ user: Object })
 
 
+
 const form = reactive({
     name: "",
     email: "",
