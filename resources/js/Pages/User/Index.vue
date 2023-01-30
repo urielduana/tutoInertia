@@ -37,6 +37,8 @@ defineProps({ users: Object })
                                     <td class="p-3 border">{{u.email}}</td>
                                     <td class="p-3 border">
                                         <Link :href="route('user.show', { customer:u })">Details</Link>
+                                        <Link :href="route('user.edit', { customer:u })">Edit</Link>
+
                                     </td>
                                 </tr>
                             </tbody>

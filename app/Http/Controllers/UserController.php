@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Requests\StoreUserPost;
+use App\Http\Requests\UpdateUserPut;
 
 
 
@@ -66,9 +67,9 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(User $customer)
     {
-        //
+        return Inertia::render('User/Edit', compact('customer'));
     }
 
     /**
@@ -78,9 +79,12 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserPut $request, User $customer)
     {
-        //
+
+        $customer->update($request->validated());
+        $users = User::all();
+        return Inertia::render('User/Index', compact('users'));
     }
 
     /**
