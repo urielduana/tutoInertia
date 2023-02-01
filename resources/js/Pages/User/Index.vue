@@ -9,9 +9,9 @@ import { Link } from '@inertiajs/vue3'
 import { router } from '@inertiajs/vue3'
 
 defineProps({ users: Object })
-
 const data = reactive({
-    modalOpen: false,
+    modalOpen:false,
+    selectedUser:Object,
 });
 
 function deleteUser(data) {
@@ -55,7 +55,8 @@ function deleteUser(data) {
                                         <Link :href="route('user.show', { customer:u })">Details</Link>
                                         <Link :href="route('user.edit', { customer:u })">Edit</Link>
                                         <!-- <Link :href="route('user.destroy', { customer:u })" method="DELETE" as="button">Delete</Link> -->
-                                        <button @click="deleteUser(u)">Delete</button>
+                                        <!-- <button @click="deleteUser(u)">Delete</button> -->
+                                        <button @click="data.modalOpen=true;data.selectedUser=u">Borrar</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -65,17 +66,21 @@ function deleteUser(data) {
             </div>
         </div>
 
-        <dialog-modal :show="modalOpen">
+        <dialog-modal :show="data.modalOpen">
             <template v-slot:title>
                 <h1>Titulo Modal</h1>
             </template>
             <template v-slot:content>
                 <h1>Hola</h1>
+                {{ data.selectedUser }}
             </template>
             <template v-slot:footer>
-                <danger-button @click="modalOpen=false">
-                    Cerrar
+                <danger-button @click="data.modalOpen=false" >
+                    Cerrar 
                 </danger-button>
+                <primary-button>
+                    Eliminar
+                </primary-button>
             </template>
         </dialog-modal>
     </AppLayout>
