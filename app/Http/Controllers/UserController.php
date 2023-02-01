@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Requests\StoreUserPost;
 use App\Http\Requests\UpdateUserPut;
+use Illuminate\Support\Facades\Redirect;
+
 
 
 
@@ -43,11 +45,8 @@ class UserController extends Controller
     public function store(StoreUserPost $request)
     {
         User::create($request->validated());
+        return Redirect::route('user.index');
 
-
-
-        $users = User::all();
-        return Inertia::render('User/Index', compact('users'));
     }
 
     /**
@@ -83,8 +82,8 @@ class UserController extends Controller
     {
 
         $customer->update($request->validated());
-        $users = User::all();
-        return Inertia::render('User/Index', compact('users'));
+        return Redirect::route('user.index');
+
     }
 
     /**
@@ -93,8 +92,10 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(User $customer)
     {
-        //
+        $customer->delete();
+
+        return Redirect::route('user.index');
     }
 }

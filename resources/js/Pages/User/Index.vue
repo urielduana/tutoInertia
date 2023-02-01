@@ -1,7 +1,23 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
+import DialogModal from "@/Components/DialogModal.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import DangerButton from "@/Components/DangerButton.vue";
+
+import { reactive } from 'vue'
 import { Link } from '@inertiajs/vue3'
+import { router } from '@inertiajs/vue3'
+
 defineProps({ users: Object })
+
+const data = reactive({
+    modalOpen: false,
+});
+
+function deleteUser(data) {
+    if(!confirm("Are you sure you want to delete this user " + data.name + "?")) return;
+    router.delete(route('user.destroy', {customer:data}))
+}
 
 </script>
 
@@ -38,7 +54,8 @@ defineProps({ users: Object })
                                     <td class="p-3 border">
                                         <Link :href="route('user.show', { customer:u })">Details</Link>
                                         <Link :href="route('user.edit', { customer:u })">Edit</Link>
-
+                                        <!-- <Link :href="route('user.destroy', { customer:u })" method="DELETE" as="button">Delete</Link> -->
+                                        <button @click="deleteUser(u)">Delete</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -47,5 +64,19 @@ defineProps({ users: Object })
                 </div>
             </div>
         </div>
+
+        <dialog-modal :show="modalOpen">
+            <template v-slot:title>
+                <h1>Titulo Modal</h1>
+            </template>
+            <template v-slot:content>
+                <h1>Hola</h1>
+            </template>
+            <template v-slot:footer>
+                <danger-button @click="modalOpen=false">
+                    Cerrar
+                </danger-button>
+            </template>
+        </dialog-modal>
     </AppLayout>
 </template>
