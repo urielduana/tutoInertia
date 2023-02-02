@@ -4,21 +4,21 @@ import DialogModal from "@/Components/DialogModal.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 
-import { reactive } from 'vue'
-import { Link } from '@inertiajs/vue3'
-import { router } from '@inertiajs/vue3'
+import { reactive } from "vue";
+import { Link } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
 
-defineProps({ users: Object })
+defineProps({ users: Object });
 const data = reactive({
-    modalOpen:false,
-    selectedUser:Object,
+    modalOpen: false,
+    selectedUser: Object,
 });
 
 function deleteUser(data) {
-    if(!confirm("Are you sure you want to delete this user " + data.name + "?")) return;
-    router.delete(route('user.destroy', {customer:data}))
+    // if(!confirm("Are you sure you want to delete this user " + data.name + "?")) return;
+    router.delete(route("user.destroy", { customer: this.data.selectedUser }));
+    this.data.modalOpen = false;
 }
-
 </script>
 
 <template>
@@ -28,16 +28,13 @@ function deleteUser(data) {
                 Users
             </h2>
         </template>
-        
+
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-                        <br>
-                        <Link :href="route('user.create')">Crear Usuario</Link>
-
-
-                        <table class="table-auto w-full text-center">
+                        <Link class="pb-8" :href="route('user.create')"><primary-button>Crear Usuario</primary-button></Link>
+                        <table class="table-auto w-full text-center mt-8">
                             <thead>
                                 <tr>
                                     <th class="p-3">Id</th>
@@ -48,15 +45,36 @@ function deleteUser(data) {
                             </thead>
                             <tbody>
                                 <tr v-for="u in users" :key="u.id">
-                                    <td class="p-3 border">{{u.id}}</td>
-                                    <td class="p-3 border">{{u.name}}</td>
-                                    <td class="p-3 border">{{u.email}}</td>
+                                    <td class="p-3 border">{{ u.id }}</td>
+                                    <td class="p-3 border">{{ u.name }}</td>
+                                    <td class="p-3 border">{{ u.email }}</td>
                                     <td class="p-3 border">
-                                        <Link :href="route('user.show', { customer:u })">Details</Link>
-                                        <Link :href="route('user.edit', { customer:u })">Edit</Link>
+                                        <Link
+                                            :href="
+                                                route('user.show', {
+                                                    customer: u,
+                                                })
+                                            "
+                                            >Details</Link
+                                        >
+                                        <Link
+                                            :href="
+                                                route('user.edit', {
+                                                    customer: u,
+                                                })
+                                            "
+                                            >Edit</Link
+                                        >
                                         <!-- <Link :href="route('user.destroy', { customer:u })" method="DELETE" as="button">Delete</Link> -->
                                         <!-- <button @click="deleteUser(u)">Delete</button> -->
-                                        <button @click="data.modalOpen=true;data.selectedUser=u">Borrar</button>
+                                        <button
+                                            @click="
+                                                data.modalOpen = true;
+                                                data.selectedUser = u;
+                                            "
+                                        >
+                                            Borrar
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -71,12 +89,16 @@ function deleteUser(data) {
                 <h1>Titulo Modal</h1>
             </template>
             <template v-slot:content>
-                <h1>Hola</h1>
-                {{ data.selectedUser }}
+                <h1 v-if="data.selectedUser">
+                    Are you sure you want to delete this user
+                    {{ data.selectedUser.name }}?
+                </h1>
             </template>
             <template v-slot:footer>
-                <primary-button>Eliminar</primary-button>
-                <danger-button @click="data.modalOpen=false" >Cerrar</danger-button>
+                <primary-button @click="deleteUser()">Eliminar</primary-button>
+                <danger-button @click="data.modalOpen = false"
+                    >Cerrar</danger-button
+                >
             </template>
         </dialog-modal>
     </AppLayout>
