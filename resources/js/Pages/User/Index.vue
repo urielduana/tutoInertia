@@ -34,15 +34,22 @@ function deleteUser(data) {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+                        <Link class="pb-8" :href="route('user.create')">
+                            <primary-button>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Crear Usuario
+                            </primary-button>
+                        </Link>
                         
-                        <Link class="pb-8" :href="route('user.create')"><primary-button>Crear Usuario</primary-button></Link>
                         <table class="table-auto w-full text-center">
                             <thead>
                                 <tr>
-                                    <th class="p-3">Id</th>
-                                    <th class="p-3">Nombre</th>
-                                    <th class="p-3">Email</th>
-                                    <th class="p-3">Acciones</th>
+                                    <th class="p-3">ID</th>
+                                    <th class="p-3">NAME</th>
+                                    <th class="p-3">EMAIL</th>
+                                    <th class="p-3">ACTIONS</th>
                                 </tr>
                             </thead>
                             <tbody>
