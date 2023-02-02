@@ -75,12 +75,8 @@ function deleteUser(data) {
                 {{ data.selectedUser }}
             </template>
             <template v-slot:footer>
-                <danger-button @click="data.modalOpen=false" >
-                    Cerrar 
-                </danger-button>
-                <primary-button>
-                    Eliminar
-                </primary-button>
+                <primary-button>Eliminar</primary-button>
+                <danger-button @click="data.modalOpen=false" >Cerrar</danger-button>
             </template>
         </dialog-modal>
     </AppLayout>
