@@ -12,12 +12,13 @@ import { Link } from '@inertiajs/vue3'
 import { router } from '@inertiajs/vue3'
 
 
-defineProps({ users: Object })
+const props = defineProps({ users: Object , name: String})
+
 const data = reactive({
     modalOpen:false,
     selectedUser:Object,
     form: {
-        name: "",
+        name: props.name,
     },
 });
 
@@ -38,6 +39,10 @@ function deleteUser(data) {
 </script>
 
 <template>
+
+    
+<!-- <pre>
+</pre> -->
     <AppLayout title="Dashboard">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -61,7 +66,6 @@ function deleteUser(data) {
                             <input v-model="data.form.name" class="w-full mr-3" type="text" placeholder="Search by Name or Email">
                             <button type="submit" class="btn btn-primary">Search</button>
                         </form>
-
                         <table class="table-auto w-full text-center">
                             <thead>
                                 <tr>

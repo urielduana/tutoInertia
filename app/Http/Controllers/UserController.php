@@ -22,6 +22,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::orderBy('id');
+        $name = "";
 
         if(request()->has("name")){
             $name = request("name");
@@ -29,11 +30,9 @@ class UserController extends Controller
             -> orWhere("email", "like", "%".request("name")."%");
         }
 
-        $users = $users->paginate(10);
+        $users = $users->paginate(10)->appends(request()->except("page"));
 
-
-
-        return Inertia::render('User/Index', compact('users'));
+        return Inertia::render('User/Index', compact('users', 'name'));
     }
 
     /**

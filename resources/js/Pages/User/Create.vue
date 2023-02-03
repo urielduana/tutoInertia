@@ -7,7 +7,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { router } from '@inertiajs/vue3'
 import { reactive } from 'vue'
 
-defineProps({ errors: Object },{ user: Object })
+defineProps({ errors: Object, user: Object })
 
 
 
