@@ -23,10 +23,10 @@ class UserController extends Controller
     {
         $users = User::orderBy('id');
 
-        if(request()->has("search")){
-            $name = request("search");
-            $users = $users -> where("name", "like", "%".request("search")."%")
-            -> orWhere("email", "like", "%".request("search")."%");
+        if(request()->has("name")){
+            $name = request("name");
+            $users = $users -> where("name", "like", "%".request("name")."%")
+            -> orWhere("email", "like", "%".request("name")."%");
         }
 
         $users = $users->paginate(10);

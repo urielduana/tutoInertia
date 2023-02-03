@@ -11,16 +11,28 @@ import { reactive } from 'vue'
 import { Link } from '@inertiajs/vue3'
 import { router } from '@inertiajs/vue3'
 
+
 defineProps({ users: Object })
 const data = reactive({
     modalOpen:false,
     selectedUser:Object,
+    form: {
+        name: "",
+    },
 });
+
+
+function  submit(){
+    router.get(route('user.index'), data.form)
+    console.log(data.form)
+
+}
 
 function deleteUser(data) {
     // if(!confirm("Are you sure you want to delete this user " + data.name + "?")) return;
     router.delete(route('user.destroy', {customer:this.data.selectedUser}))
     this.data.modalOpen=false;
+    
 }
 
 </script>
@@ -32,7 +44,6 @@ function deleteUser(data) {
                 Users
             </h2>
         </template>
-        
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
@@ -47,7 +58,7 @@ function deleteUser(data) {
                         </Link>
                         
                         <form class="flex mt-2" method="get" @submit.prevent="submit">
-                            <input name="search" class="w-full mr-3" type="text" placeholder="Search by Name or Email">
+                            <input v-model="data.form.name" class="w-full mr-3" type="text" placeholder="Search by Name or Email">
                             <button type="submit" class="btn btn-primary">Search</button>
                         </form>
 
