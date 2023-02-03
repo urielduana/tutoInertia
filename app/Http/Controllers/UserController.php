@@ -21,7 +21,18 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::orderBy('id');
+
+        if(request()->has("search")){
+            $name = request("search");
+            $users = $users -> where("name", "like", "%".request("search")."%")
+            -> orWhere("email", "like", "%".request("search")."%");
+        }
+
+        $users = $users->paginate(10);
+
+
+
         return Inertia::render('User/Index', compact('users'));
     }
 

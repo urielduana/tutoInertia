@@ -3,6 +3,9 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import DialogModal from "@/Components/DialogModal.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import DangerButton from "@/Components/DangerButton.vue";
+import Paginator from "@/Components/Paginator.vue";
+
+
 
 import { reactive } from 'vue'
 import { Link } from '@inertiajs/vue3'
@@ -43,6 +46,11 @@ function deleteUser(data) {
                             </primary-button>
                         </Link>
                         
+                        <form class="flex mt-2" method="get" @submit.prevent="submit">
+                            <input name="search" class="w-full mr-3" type="text" placeholder="Search by Name or Email">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </form>
+
                         <table class="table-auto w-full text-center">
                             <thead>
                                 <tr>
@@ -53,7 +61,7 @@ function deleteUser(data) {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="u in users" :key="u.id">
+                                <tr v-for="u in users.data" :key="u.id">
                                     <td class="p-3 border">{{u.id}}</td>
                                     <td class="p-3 border">{{u.name}}</td>
                                     <td class="p-3 border">{{u.email}}</td>
@@ -80,11 +88,17 @@ function deleteUser(data) {
                                 </tr>
                             </tbody>
                         </table>
+                        <paginator class="mt-4" :paginator="users" >
+                        </paginator>
+
                     </div>
                 </div>
             </div>
         </div>
 
+
+
+        
         <dialog-modal :show="data.modalOpen">
             <template v-slot:title>
                 <h1>Titulo Modal</h1>
