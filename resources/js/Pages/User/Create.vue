@@ -19,6 +19,13 @@ const form = reactive({
 function submit() {
     router.post(route('user.store'), form)
 }
+
+function cleanForm() {
+    form.name = "";
+    form.email = "";
+    form.password = "";
+}
+
 </script>
 
 <template>
@@ -46,7 +53,8 @@ function submit() {
                             <input class="my-1 block w-full" type="password" v-model="form.password"/>
                             <input-error :message="errors.password" />
 
-                            <primary-button type="submit">Submit</primary-button>
+                            <a @click="cleanForm" href="#">Clean Form</a>
+                            <primary-button class="float-right" type="submit">Submit</primary-button>
                         </form>
                         
                     </div>

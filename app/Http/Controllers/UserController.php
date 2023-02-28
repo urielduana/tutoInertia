@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Http\Requests\StoreUserPost;
 use App\Http\Requests\UpdateUserPut;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Middleware\HandleInertiaRequests;
 
 
 
@@ -22,6 +23,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::orderBy('id');
+        // request()->session()->flash('message', 'Mensaje de pruebaaaa');
         $name = "";
 
         if(request()->has("name")){
@@ -55,7 +57,7 @@ class UserController extends Controller
     public function store(StoreUserPost $request)
     {
         User::create($request->validated());
-        return Redirect::route('user.index');
+        return Redirect::route('user.index')->with('message', 'User created');
 
     }
 
@@ -90,10 +92,16 @@ class UserController extends Controller
      */
     public function update(UpdateUserPut $request, User $customer)
     {
-
+        // dd($request->avatar);
+        // dd(request()->file("avatar"));
+        // dd(request());
+        //request()->session()->flash('message', 'Usuario editado');
         $customer->update($request->validated());
-        return Redirect::route('user.index');
 
+        if(request()->hasFile('avatar')){
+            $customer->updateProfilePhoto(request()->file("avatar"));
+        }
+        return Redirect::route('user.index')->with('message', 'User edited');
     }
 
     /**
@@ -105,7 +113,7 @@ class UserController extends Controller
     public function destroy(User $customer)
     {
         $customer->delete();
-
-        return Redirect::route('user.index');
+        // request()->session()->flash('message', 'Mensaje de elimino');
+        return Redirect::route('user.index')->with('message', 'User deleted');
     }
 }
